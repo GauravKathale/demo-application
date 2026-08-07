@@ -1,0 +1,9 @@
+[
+  {
+    "ne_name": "BLNMSS34",
+    "provider": "BLN.LLC",
+    "region": "BLN",
+    "connected_router": "BLN-RTR-01",
+    "is_active": true
+  }
+]

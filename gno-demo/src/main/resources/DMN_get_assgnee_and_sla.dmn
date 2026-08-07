@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0598rx4" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.22.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <decision id="DMN_get_assgnee_and_sla" name="DMN_get_assgnee_and_sla">
+    <decisionTable id="DecisionTable_0la7zyi" hitPolicy="FIRST">
+      <input id="Input_1" label="Assignee Area">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>assigneeArea</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0sruz6k" label="NE Type">
+        <inputExpression id="LiteralExpression_0y2y7oh" typeRef="string">
+          <text>neType</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Assignee Name" name="assigneeName" typeRef="string" />
+      <output id="OutputClause_0wohctf" label="SLA (days)" name="sla" typeRef="integer" />
+      <rule id="DecisionRule_00iogxb">
+        <inputEntry id="UnaryTests_0ibwf1l">
+          <text>"Ethernet"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tuhn5f">
+          <text>"Router"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1awfgrs">
+          <text>"712020:ac59bce9-2ebd-4e68-bc5e-88db46418977"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1570j20">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03qs8ju">
+        <inputEntry id="UnaryTests_008utmx">
+          <text>"VoIP"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14vr1fm">
+          <text>"Router"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1820nr5">
+          <text>"712020:ac59bce9-2ebd-4e68-bc5e-88db46418977"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0mfqstc">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09yjvjj">
+        <inputEntry id="UnaryTests_1yboos1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07bt5xk">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kgl4t5">
+          <text>"712020:ac59bce9-2ebd-4e68-bc5e-88db46418977"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1fly9ft">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="DMN_get_assgnee_and_sla">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
