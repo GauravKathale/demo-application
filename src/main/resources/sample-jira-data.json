@@ -1,0 +1,52 @@
+[
+  {
+    "issueKey": "JIRA-101",
+    "summary": "Login page validation issue",
+    "issueType": "Bug",
+    "priority": "High",
+    "status": "Open",
+    "assignee": "A",
+    "reporter": "QA Team",
+    "createdDate": "2026-06-01T10:15:00",
+    "labels": ["login", "ui", "validation"]
+  },
+  {
+    "issueKey": "JIRA-102",
+    "summary": "Add file upload support for attachments",
+    "issueType": "Story",
+    "priority": "Medium",
+    "status": "In Progress",
+    "assignee": "Rahul M",
+    "storyPoints": 5,
+    "sprint": "Sprint 24"
+  },
+  {
+    "issueKey": "JIRA-103",
+    "summary": "API response mismatch in issue details endpoint",
+    "issueType": "Bug",
+    "priority": "Critical",
+    "status": "Resolved",
+    "reporter": "Automation Team",
+    "environment": "SIT",
+    "fixVersion": "v1.2.3"
+  },
+  {
+    "issueKey": "JIRA-104",
+    "summary": "Implement dashboard widget for ticket ageing",
+    "issueType": "Task",
+    "status": "To Do",
+    "component": "Dashboard"
+  },
+  {
+    "issueKey": "JIRA-105",
+    "summary": "Unable to update priority from edit screen",
+    "issueType": "Bug",
+    "priority": "High",
+    "status": "Reopened",
+    "assignee": "Neha P",
+    "reporter": "Ops Team",
+    "createdDate": "2026-06-10T14:30:00",
+    "updatedDate": "2026-06-12T11:45:00",
+    "commentsCount": 3
+  }
+]

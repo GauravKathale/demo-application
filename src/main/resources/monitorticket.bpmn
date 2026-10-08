@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_monitor_ticket" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.50.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="monitor_ticket" name="Monitor Ticket" isExecutable="true" camunda:historyTimeToLive="2">
+    <bpmn:startEvent id="Event_00nii15" name="Start">
+      <bpmn:outgoing>Flow_1r617qj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_12q08ru">
+      <bpmn:incoming>Flow_1r617qj</bpmn:incoming>
+      <bpmn:incoming>Flow_18qtb45</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aioboy</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0d9x1ur" name="Check Ticket Status" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${getTicketStatus}">
+      <bpmn:incoming>Flow_0aioboy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0om04c2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0jm09gs" name="Status?" default="Flow_1mwzr5g">
+      <bpmn:incoming>Flow_0om04c2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mwzr5g</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rl73vs</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_0vxhk1r" name="Wait 1 min">
+      <bpmn:incoming>Flow_1mwzr5g</bpmn:incoming>
+      <bpmn:outgoing>Flow_18qtb45</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0b085h0">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_0qqucxk" name="End">
+      <bpmn:incoming>Flow_1rl73vs</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1r617qj" sourceRef="Event_00nii15" targetRef="Gateway_12q08ru" />
+    <bpmn:sequenceFlow id="Flow_0aioboy" sourceRef="Gateway_12q08ru" targetRef="Activity_0d9x1ur" />
+    <bpmn:sequenceFlow id="Flow_0om04c2" sourceRef="Activity_0d9x1ur" targetRef="Gateway_0jm09gs" />
+    <bpmn:sequenceFlow id="Flow_1mwzr5g" name="Open" sourceRef="Gateway_0jm09gs" targetRef="Event_0vxhk1r" />
+    <bpmn:sequenceFlow id="Flow_18qtb45" sourceRef="Event_0vxhk1r" targetRef="Gateway_12q08ru" />
+    <bpmn:sequenceFlow id="Flow_1rl73vs" name="Done" sourceRef="Gateway_0jm09gs" targetRef="Event_0qqucxk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ticketStatus == "Done" || ticketStatus == "DONE" || ticketStatus == "41"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:textAnnotation id="TextAnnotation_1monitor">
+      <bpmn:text>Called from ticket_management.
+Business key = Jira issueId.
+Sets: ticketStatus</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1monitor" associationDirection="None" sourceRef="Activity_0d9x1ur" targetRef="TextAnnotation_1monitor" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_monitor">
+    <bpmndi:BPMNPlane id="BPMNPlane_monitor" bpmnElement="monitor_ticket">
+      <bpmndi:BPMNShape id="Event_00nii15_di" bpmnElement="Event_00nii15">
+        <dc:Bounds x="152" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="235" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_12q08ru_di" bpmnElement="Gateway_12q08ru" isMarkerVisible="true">
+        <dc:Bounds x="245" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d9x1ur_di" bpmnElement="Activity_0d9x1ur">
+        <dc:Bounds x="350" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0jm09gs_di" bpmnElement="Gateway_0jm09gs" isMarkerVisible="true">
+        <dc:Bounds x="515" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="521" y="242" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vxhk1r_di" bpmnElement="Event_0vxhk1r">
+        <dc:Bounds x="392" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="384" y="125" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qqucxk_di" bpmnElement="Event_0qqucxk">
+        <dc:Bounds x="622" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="630" y="235" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1monitor_di" bpmnElement="Association_1monitor">
+        <di:waypoint x="397" y="250" />
+        <di:waypoint x="397" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r617qj_di" bpmnElement="Flow_1r617qj">
+        <di:waypoint x="188" y="210" />
+        <di:waypoint x="245" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aioboy_di" bpmnElement="Flow_0aioboy">
+        <di:waypoint x="295" y="210" />
+        <di:waypoint x="350" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0om04c2_di" bpmnElement="Flow_0om04c2">
+        <di:waypoint x="450" y="210" />
+        <di:waypoint x="515" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mwzr5g_di" bpmnElement="Flow_1mwzr5g">
+        <di:waypoint x="540" y="185" />
+        <di:waypoint x="540" y="100" />
+        <di:waypoint x="428" y="100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="547" y="140" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18qtb45_di" bpmnElement="Flow_18qtb45">
+        <di:waypoint x="392" y="100" />
+        <di:waypoint x="270" y="100" />
+        <di:waypoint x="270" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rl73vs_di" bpmnElement="Flow_1rl73vs">
+        <di:waypoint x="565" y="210" />
+        <di:waypoint x="622" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="581" y="192" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1monitor_di" bpmnElement="TextAnnotation_1monitor">
+        <dc:Bounds x="290" y="300" width="220" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
