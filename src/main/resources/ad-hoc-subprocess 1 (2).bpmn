@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:kramax="http://kramax.vodafone.org/schema/1.0/bpmn" xmlns:modeler="http://kramax.vodafone.org/schema/modeler/1.0" id="Definitions_0i21ila" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.50.1" modeler:executionPlatform="Kramax Platform" modeler:executionPlatformVersion="3.1.0">
+  <bpmn:process id="ad-hoc-subprocess" name="Ad Hoc Subprocess" isExecutable="true" camunda:historyTimeToLive="40">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1fapf6i</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1fapf6i" sourceRef="StartEvent_1" targetRef="Activity_InitiateAdhoc" />
+    <bpmn:scriptTask id="Activity_InitiateAdhoc" name="initiate adhoc sub process" scriptFormat="groovy">
+      <bpmn:incoming>Flow_1fapf6i</bpmn:incoming>
+      <bpmn:outgoing>Flow_ScriptToAdhoc</bpmn:outgoing>
+      <bpmn:script>var priority = 9;
+execution.setVariable("priority", priority);
+var list;
+if (priority &gt;= 1 &amp;&amp; priority &lt;= 5) {
+  list = ["Activity_1_1"];
+} else if (priority &gt;= 6 &amp;&amp; priority &lt;= 10) {
+  list = ["Activity_1_1", "Activity_1_2"];
+}
+execution.setVariable("taskList", list);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_ScriptToAdhoc" sourceRef="Activity_InitiateAdhoc" targetRef="Activity_19pd2yt" />
+    <bpmn:adHocSubProcess id="Activity_19pd2yt">
+      <bpmn:extensionElements>
+        <kramax:properties>
+          <kramax:property name="activeTasksCollection" value="${taskList}" />
+        </kramax:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ScriptToAdhoc</bpmn:incoming>
+      <bpmn:outgoing>Flow_01ci65a</bpmn:outgoing>
+      <bpmn:serviceTask id="Activity_1_1" name="Service Task" camunda:delegateExpression="${sout}" />
+      <bpmn:userTask id="Activity_1_2" name="User Task" />
+    </bpmn:adHocSubProcess>
+    <bpmn:endEvent id="Event_0flj60i">
+      <bpmn:incoming>Flow_01ci65a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01ci65a" sourceRef="Activity_19pd2yt" targetRef="Event_0flj60i" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ad-hoc-subprocess">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_InitiateAdhoc_di" bpmnElement="Activity_InitiateAdhoc">
+        <dc:Bounds x="260" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08wj5g1_di" bpmnElement="Activity_19pd2yt" isExpanded="true">
+        <dc:Bounds x="450" y="90" width="360" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_ServiceTask_di" bpmnElement="Activity_1_1">
+        <dc:Bounds x="490" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_UserTask_di" bpmnElement="Activity_1_2">
+        <dc:Bounds x="650" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0flj60i_di" bpmnElement="Event_0flj60i">
+        <dc:Bounds x="892" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fapf6i_di" bpmnElement="Flow_1fapf6i">
+        <di:waypoint x="188" y="190" />
+        <di:waypoint x="260" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ScriptToAdhoc_di" bpmnElement="Flow_ScriptToAdhoc">
+        <di:waypoint x="360" y="190" />
+        <di:waypoint x="450" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01ci65a_di" bpmnElement="Flow_01ci65a">
+        <di:waypoint x="810" y="200" />
+        <di:waypoint x="892" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
